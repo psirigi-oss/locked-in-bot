@@ -10,6 +10,7 @@ const app = new App({
     socketMode: true
 });
 
+// WAKES UP THE BOT
 app.command("/locked-in-bot-ping",async({command,ack,respond})=>{
     const start = Date.now();
     await ack();
@@ -22,6 +23,7 @@ app.command("/locked-in-bot-ping",async({command,ack,respond})=>{
     console.log("bot is running!");
 })();
 
+// ASKS BOT FOR HELP
 app.command("/locked-in-bot-help",async({ack,respond})=>{
     await ack();
     await respond({
@@ -32,17 +34,21 @@ app.command("/locked-in-bot-help",async({ack,respond})=>{
     });
 });
 
-app.command("/locked-in-bot-catfact", async ({ ack, respond }) => {
+//CAT FACT
+app.command("/locked-in-bot-history", async ({ ack, respond }) => {
   await ack();
 
   try {
-    const response = await axios.get("https://catfact.ninja/fact");
-    await respond({ text: `Cat Fact:\n${response.data.fact}` });
+    const response = await axios.get("https://muffinlabs.com");
+    const events = response.data.data.Events;
+    const randomEvent = events[Math.floor(Math.random() * events.length)];
+    await respond({ text: `📜 *On this day in Year ${randomEvent.year}:*\n${randomEvent.text}` });
   } catch (err) {
-    await respond({ text: "Failed to fetch a cat fact." });
+    await respond({ text: "Failed to fetch a history fact." });
   }
 });
 
+//JOKE
 app.command("/locked-in-bot-joke", async ({ ack, respond }) => {
   await ack();
 
@@ -87,4 +93,4 @@ app.command("/locked-in-bot-dice", async ({ command, ack, respond }) => {
     await respond({ text: `🎲 You rolled a custom *${sides}-sided* die and got a *${roll}*!` }); // 1.3.8
 });
 
-
+// 
