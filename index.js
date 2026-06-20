@@ -58,3 +58,31 @@ ${response.data.punchline}`
     await respond({ text: "Failed to fetch a joke." });
   }
 });
+
+// COIN FLIP COMMAND
+app.command('/locked-in-bot-coinflip', async ({ ack, respond }) => {
+    await ack();
+    const result = Math.random() < 0.5 ? "Heads! 🪙" : "Tails! 🪙";
+    await respond(`The coin spun through the air and landed on... *${result}*`);
+});
+
+// MAGIC 8-BALL COMMAND
+app.command('/locked-in-bot-8-ball', async ({ command, ack, respond }) => {
+    await ack();
+    const answers = [
+        "It is certain. 🔮", "Without a doubt! ✅", "Reply hazy, try again. 🌫️",
+        "Ask again later. ⏳", "Don't count on it. ❌", "My sources say no. 🛑",
+        "Outlook good! 👍", "Most likely. 😎"
+    ];
+    const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
+    await respond(`You asked: *"${command.text}"*\n🔮 The Magic 8-Ball says: *${randomAnswer}*`);
+});
+
+// CUSTOM DICE ROLLER
+app.command("/locked-in-bot-dice", async ({ command, ack, respond }) => {
+    await ack();
+    let sides = parseInt(command.text) || 6;
+    const roll = Math.floor(Math.random() * sides) + 1;
+    await respond({ text: `🎲 You rolled a custom **${sides}-sided** die and got a **${roll}**!` });
+});
+
