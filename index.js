@@ -34,17 +34,16 @@ app.command("/locked-in-bot-help",async({ack,respond})=>{
     });
 });
 
-//CAT FACT
+//HISTORY
 app.command("/locked-in-bot-history", async ({ ack, respond }) => {
   await ack();
 
   try {
-    // Fetches from a highly stable, open-source history facts mirror
-    const response = await axios.get("https://muffinlabs.com", {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
-    });
-    const events = response.data.data.Events;
+    // Swapped to a rock-solid, open-source history API mirror
+    const response = await axios.get("https://vercel.app");
+    const events = response.data.events;
     const randomEvent = events[Math.floor(Math.random() * events.length)];
+    
     await respond({ text: `📜 *On this day in Year ${randomEvent.year}:*\n${randomEvent.text}` });
   } catch (err) {
     await respond({ text: "Failed to fetch a history fact." });
