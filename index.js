@@ -39,7 +39,10 @@ app.command("/locked-in-bot-history", async ({ ack, respond }) => {
   await ack();
 
   try {
-    const response = await axios.get("https://muffinlabs.com");
+    // Fetches from a highly stable, open-source history facts mirror
+    const response = await axios.get("https://muffinlabs.com", {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+    });
     const events = response.data.data.Events;
     const randomEvent = events[Math.floor(Math.random() * events.length)];
     await respond({ text: `📜 *On this day in Year ${randomEvent.year}:*\n${randomEvent.text}` });
