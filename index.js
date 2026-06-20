@@ -80,9 +80,11 @@ app.command('/locked-in-bot-8-ball', async ({ command, ack, respond }) => {
 
 // CUSTOM DICE ROLLER
 app.command("/locked-in-bot-dice", async ({ command, ack, respond }) => {
-    await ack();
+    await ack(); // 1.3.7, 1.3.8
     let sides = parseInt(command.text) || 6;
     const roll = Math.floor(Math.random() * sides) + 1;
-    await respond({ text: `🎲 You rolled a custom **${sides}-sided** die and got a **${roll}**!` });
+    // Changed double asterisks (**) to single asterisks (*) for Slack formatting
+    await respond({ text: `🎲 You rolled a custom *${sides}-sided* die and got a *${roll}*!` }); // 1.3.8
 });
+
 
