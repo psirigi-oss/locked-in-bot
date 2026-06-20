@@ -23,35 +23,18 @@ app.command("/locked-in-bot-ping",async({command,ack,respond})=>{
     console.log("bot is running!");
 })();
 
-// ASKS BOT FOR HELP
-app.command("/locked-in-bot-help",async({ack,respond})=>{
-    await ack();
-    await respond({
-        text:
-        `Available Commands:
-        /locked-in-bot-ping - Check bot latency
-        /locked-in-bot-catfact - Get a cat fact`
-    });
-});
-
-//HISTORY
-app.command("/locked-in-bot-history", async ({ ack, respond }) => {
+// HELP COMMAND
+app.command("/locked-in-bot-help", async ({ ack, respond }) => {
   await ack();
-
-  try {
-    // Fetches featured historical events from Wikipedia for today's date
-    const today = new Date();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    
-    const response = await axios.get(`https://wikimedia.org{month}/${day}`);
-    const events = response.data.selected;
-    const randomEvent = events[Math.floor(Math.random() * events.length)];
-    
-    await respond({ text: `📜 *On this day in Year ${randomEvent.year}:*\n${randomEvent.text}` });
-  } catch (err) {
-    await respond({ text: "Failed to fetch a history fact." });
-  }
+  await respond({ 
+    text: "🤖 *Locked-In-Bot Command List:*\n\n" +
+          "• `/locked-in-bot-ping` - Check if the bot is awake\n" +
+          "• `/locked-in-bot-help` - See this list of commands\n" +
+          "• `/locked-in-bot-joke` - Get a random joke\n" +
+          "• `/locked-in-bot-coinflip` - Flip a coin\n" +
+          "• `/locked-in-bot-8ball [question]` - Ask the magic 8-ball\n" +
+          "• `/locked-in-bot-dice [sides]` - Roll a custom die (default 6)"
+  });
 });
 
 //JOKE
