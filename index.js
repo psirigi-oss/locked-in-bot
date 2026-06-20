@@ -39,9 +39,13 @@ app.command("/locked-in-bot-history", async ({ ack, respond }) => {
   await ack();
 
   try {
-    // Swapped to a rock-solid, open-source history API mirror
-    const response = await axios.get("https://vercel.app");
-    const events = response.data.events;
+    // Fetches featured historical events from Wikipedia for today's date
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    
+    const response = await axios.get(`https://wikimedia.org{month}/${day}`);
+    const events = response.data.selected;
     const randomEvent = events[Math.floor(Math.random() * events.length)];
     
     await respond({ text: `📜 *On this day in Year ${randomEvent.year}:*\n${randomEvent.text}` });
